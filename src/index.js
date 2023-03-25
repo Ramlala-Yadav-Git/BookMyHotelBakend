@@ -4,6 +4,8 @@ const { cloudinaryConfig } = require("./config/cloudinaryConfig");
 const cors = require("cors");
 const connect = require("./config/mongoConfig");
 const router = require("./routes");
+const undefinedUrlHandler = require("./middlewares/undefinedUrlhandler");
+const errorHandler = require("./middlewares/errorHandler");
 
 require("dotenv").config();
 
@@ -14,6 +16,8 @@ app.use(cors());
 app.use(urlencoded({ extended: false }));
 app.use(json());
 app.use("*", cloudinaryConfig);
+app.use(undefinedUrlHandler);
+app.use(errorHandler);
 
 app.use("/book-my-hotel", router);
 

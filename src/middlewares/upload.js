@@ -13,12 +13,12 @@ const upload = (req, res, next) => {
       })
       .catch((err) =>
         res.status(400).json({
-          messge: "Bad Request",
-          data: {
-            err,
+          error: {
+            message: err.message,
           },
         })
       );
   }
 };
+
 module.exports = upload;

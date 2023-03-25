@@ -3,6 +3,6 @@ const hotelController = require("./controller/hotel.controller");
 
 const router = express.Router();
 
-router.use("/", hotelController);
+router.route("/", hotelController);
 
 module.exports = router;
