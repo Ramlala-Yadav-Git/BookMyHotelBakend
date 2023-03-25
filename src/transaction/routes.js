@@ -3,6 +3,6 @@ const transactionController = require("./controller/transaction.controller");
 
 const router = express.Router();
 
-router.route("/", transactionController);
+router.use("/", transactionController);
 
 module.exports = router;

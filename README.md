@@ -1,1 +1,1 @@
-# BookMyHotelBackend
+# BookMyHotel

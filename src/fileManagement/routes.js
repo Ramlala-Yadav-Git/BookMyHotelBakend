@@ -3,6 +3,6 @@ const fileManagementController = require("./controller/fileManagement.controller
 
 const router = express.Router();
 
-router.route("/", fileManagementController);
+router.use("/", fileManagementController);
 
 module.exports = router;

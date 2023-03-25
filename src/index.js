@@ -16,8 +16,6 @@ app.use(cors());
 app.use(urlencoded({ extended: false }));
 app.use(json());
 app.use("*", cloudinaryConfig);
-app.use(undefinedUrlHandler);
-app.use(errorHandler);
 
 app.use("/book-my-hotel", router);
 

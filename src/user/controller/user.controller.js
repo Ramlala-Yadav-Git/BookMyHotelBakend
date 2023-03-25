@@ -3,8 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res, next) => {
-  console.log("somesh")
-  return "somesh";
+  res.status(200).send({ somesh: "somesh" });
 });
 
 module.exports = router;

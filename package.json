@@ -1,5 +1,5 @@
 {
-  "name": "bookmyhotelbackend",
+  "name": "bookmyhotel",
   "version": "1.0.0",
   "description": "Backend for BookMyHotel.com",
   "main": "src/index.js",

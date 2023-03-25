@@ -4,7 +4,7 @@ const facilitySchema = mongoose.Schema(
   {
     facility: {
       type: String,
-      enum: ["FREE_CANCELLATION", "BREAKFAST", "FREE_WIFI", "BREAKFAST"],
+      enum: ["FREE_CANCELLATION", "BREAKFAST", "FREE_WIFI", "SWIMMING_POOL"],
       required: true,
     },
     status: {
