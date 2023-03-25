@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const facilitiesSchema = mongoose.Schema(
+const facilitySchema = mongoose.Schema(
   {
     facility: {
       type: String,
@@ -23,4 +23,4 @@ const facilitiesSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Feature", facilitiesSchema);
+module.exports = mongoose.model("Facility", facilitySchema);
