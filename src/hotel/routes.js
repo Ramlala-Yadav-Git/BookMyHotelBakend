@@ -1,9 +1,8 @@
 const express = require("express");
+const hotelController = require("./controller/hotel.controller");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-    res.status(200).send({ hotel: "hotel" });
-  });
+router.use("/", hotelController);
 
 module.exports = router;

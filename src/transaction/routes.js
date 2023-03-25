@@ -1,9 +1,8 @@
 const express = require("express");
+const transactionController = require("./controller/transaction.controller");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  res.status(200).send({ transaction: "transaction" });
-});
+router.use("/transaction", transactionController);
 
 module.exports = router;
