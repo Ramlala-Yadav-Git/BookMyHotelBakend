@@ -4,7 +4,7 @@ const { validateUpdate, validateCreate } = require("../validators/validator");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", auth, (req, res, next) => {
   res.status(200).send({
     hotel: "hotel",
   });
