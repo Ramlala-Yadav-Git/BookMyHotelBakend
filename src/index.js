@@ -19,6 +19,9 @@ app.use("*", cloudinaryConfig);
 
 app.use("/book-my-hotel", router);
 
+app.use(undefinedUrlHandler);
+app.use(errorHandler);
+
 const port = process.env.PORT || "2345";
 
 const start = async () => {
