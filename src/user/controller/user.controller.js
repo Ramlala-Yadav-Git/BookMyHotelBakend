@@ -6,7 +6,6 @@ const {
 } = require("../validators/validator");
 const bcrypt = require("bcrypt");
 const User = require("../model/user.model");
-const error = require("../../utils/errorUtil");
 
 const router = express.Router();
 
@@ -35,8 +34,7 @@ router.post("/", async (req, res, next) => {
       if (password) {
         updatedUser.password = await bcrypt.hash(password, SALT_ROUNDS);
       }
-      console.log(updatedUser);
-      updatedUser.role = role ? role : "USER";
+      if (role) updatedUser.role = role;
       if (email) updatedUser.email = email;
       updatedUser.name = name ? name : "";
       user = await User.findByIdAndUpdate(id, updatedUser, { new: true });

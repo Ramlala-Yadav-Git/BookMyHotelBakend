@@ -24,7 +24,7 @@ const validateCreate = async (body) => {
 };
 
 const validateUpdate = async (body, headers) => {
-  const { id, email, role = "USER", password } = body;
+  const { id, email, role, password } = body;
   const { accessToken } = headers;
   if (email && !validator.isEmail(email))
     error(400, "Email provided is invalid");
@@ -32,12 +32,17 @@ const validateUpdate = async (body, headers) => {
   const user = await User.findOne({ _id: id }).lean().exec();
   if (!user) error(400, "Invalid user Id");
 
+  if (role && role != "ADMIN" && user.role == "ADMIN")
+    error(422, "Cannot update admin user");
+
   if (password && password.length < 4)
     error(422, "Password length should be more than 3 letter");
 
   if (!["ADMIN", "ANALYST", "USER"].includes(role)) error(400, "Invalid Role");
 
   if (email && email != user.email) error(400, "Mismatch email and user Id");
+  if (role && !["ADMIN", "ANALYST", "USER"].includes(role))
+    error(400, "Invalid Role");
 
   if (["ADMIN", "ANALYST"].includes(role)) {
     if (!accessToken) error(401, "User is not authenticated");

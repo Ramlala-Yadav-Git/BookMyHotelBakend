@@ -1,4 +1,7 @@
 const error = (code, message) => {
-  throw new Error(message, { statusCode: code });
+  throw {
+    message,
+    status: code,
+  };
 };
 module.exports = error;
