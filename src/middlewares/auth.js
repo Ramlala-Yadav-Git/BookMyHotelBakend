@@ -1,9 +1,9 @@
 const User = require("../user/model/user.model");
 const error = require("../utils/errorUtil");
-const { ObjectID } = require("mongodb");
+const { ObjectId } = require("mongodb");
 
 function isValidMongoid(id) {
-  return ObjectID.isValid(id);
+  return ObjectId.isValid(id);
 }
 
 async function auth(req, res, next) {
