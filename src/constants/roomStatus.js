@@ -1,0 +1,3 @@
+const ROOM_STATUS_LIST = ["AVAILABLE", "NOT_AVAILABLE", "BOOKED"];
+
+module.exports = ROOM_STATUS_LIST;
