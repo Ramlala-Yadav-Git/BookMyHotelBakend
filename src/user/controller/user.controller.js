@@ -14,10 +14,11 @@ const SALT_ROUNDS = 10;
 
 router.post("/login", async (req, res, next) => {
   try {
-    const { body: { email } = {} } = req;
+    const { body = {} } = req;
     await validateLogin(body);
+    const { email } = body;
     const user = await User.findOne({ email: email }).lean().exec();
-    res.status(200).send(User);
+    res.status(200).send(user);
   } catch (exception) {
     next(exception);
   }
@@ -25,21 +26,16 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { body: { id, name, role, password, email } = {}, headers = {} } =
-      req;
+    const { body = {}, headers = {} } = req;
+    const { id, name, role, password, email } = body;
     let user;
     if (id) {
       await validateUpdate(body, headers);
       const updatedUser = {};
       if (password) {
-        bcrypt.hash(password, SALT_ROUNDS, function (err, hash) {
-          if (err) {
-            error(500, err.message);
-          } else {
-            updatedUser.password = hash;
-          }
-        });
+        updatedUser.password = await bcrypt.hash(password, SALT_ROUNDS);
       }
+      console.log(updatedUser);
       updatedUser.role = role ? role : "USER";
       if (email) updatedUser.email = email;
       updatedUser.name = name ? name : "";
@@ -47,13 +43,7 @@ router.post("/", async (req, res, next) => {
     } else {
       await validateCreate(body);
       const newUser = {};
-      bcrypt.hash(password, SALT_ROUNDS, function (err, hash) {
-        if (err) {
-          error(500, err.message);
-        } else {
-          newUser.password = hash;
-        }
-      });
+      newUser.password = await bcrypt.hash(password, SALT_ROUNDS);
       newUser.role = role ? role : "USER";
       newUser.email = email;
       newUser.name = name ? name : "";

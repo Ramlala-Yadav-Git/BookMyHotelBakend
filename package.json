@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/Ramlala-Yadav-Git/BookMyHotelBackend#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "cloudinary": "^1.35.0",
     "cors": "^2.8.5",
     "datauri": "^4.1.0",

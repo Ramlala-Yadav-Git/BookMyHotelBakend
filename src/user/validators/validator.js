@@ -3,8 +3,6 @@ const error = require("../../utils/errorUtil");
 const User = require("../model/user.model");
 const bcrypt = require("bcrypt");
 
-const SALT_ROUNDS = 10;
-
 const validateCreate = async (body) => {
   const { email = "", type, role = "USER", password } = body;
   if (!validator.isEmail(email))
@@ -31,7 +29,7 @@ const validateUpdate = async (body, headers) => {
   if (email && !validator.isEmail(email))
     error(400, "Email provided is invalid");
 
-  const user = await User.findById({ id }).lean().exec();
+  const user = await User.findOne({ _id: id }).lean().exec();
   if (!user) error(400, "Invalid user Id");
 
   if (password && password.length < 4)
@@ -62,13 +60,10 @@ const validateLogin = async (body) => {
   if (type != "THIRD_PARTY") {
     if (!password) error(422, "Please provide password");
 
-    bcrypt.compare(password, user.password, function (err, result) {
-      if (err) {
-        error(500, "Please provide password");
-      } else if (!result) {
-        error(422, "Password is incorrect");
-      }
-    });
+    const passwordMatched = await bcrypt.compare(password, user.password);
+    if (!passwordMatched) {
+      error(422, "Password mismatch");
+    }
   }
 };
 
