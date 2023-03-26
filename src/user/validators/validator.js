@@ -1,17 +1,75 @@
 const validator = require("validator");
 const error = require("../../utils/errorUtil");
+const User = require("../model/user.model");
+const bcrypt = require("bcrypt");
 
-const validateCreate = (email = "", role, headers) => {
-  if (!validator.isEmail(email)) {
-    error("Email provided is empty or invalid", 400);
-  }
-  if (role == "ADMIN" || role == "ANALYST") {
-    error("Not authorised to add Admin users", 403);
+const SALT_ROUNDS = 10;
+
+const validateCreate = async (body) => {
+  const { email = "", type, role = "USER", password } = body;
+  if (!validator.isEmail(email))
+    error(400, "Email provided is empty or invalid");
+
+  if (type != "THIRD_PARTY" && !password)
+    error(400, "Please provide a strong password");
+  else if (password && password.length < 4)
+    error(422, "Password length should be more than 3 letter");
+
+  if (!["ADMIN", "ANALYST", "USER"].includes(role)) error(400, "Invalid Role");
+
+  if (["ADMIN", "ANALYST"].includes(role))
+    error(403, "Not authorised to add Admin users");
+
+  const user = await User.findOne({ email: email }).lean().exec();
+
+  if (user) error(422, "User already exists");
+};
+
+const validateUpdate = async (body, headers) => {
+  const { id, email, role = "USER", password } = body;
+  const { accessToken } = headers;
+  if (email && !validator.isEmail(email))
+    error(400, "Email provided is invalid");
+
+  const user = await User.findById({ id }).lean().exec();
+  if (!user) error(400, "Invalid user Id");
+
+  if (password && password.length < 4)
+    error(422, "Password length should be more than 3 letter");
+
+  if (!["ADMIN", "ANALYST", "USER"].includes(role)) error(400, "Invalid Role");
+
+  if (email && email != user.email) error(400, "Mismatch email and user Id");
+
+  if (["ADMIN", "ANALYST"].includes(role)) {
+    if (!accessToken) error(401, "User is not authenticated");
+
+    const currentUser = await User.findOne({ _id: accessToken }).lean().exec();
+
+    if (!currentUser || currentUser.role != "ADMIN")
+      error(403, "User is not authorised to add ADMIN user");
   }
 };
 
-const validateUpdate = (id, email, role, headers) => {
-  error("Updated feature not allowed", 422);
+const validateLogin = async (body) => {
+  const { email, password, type } = body;
+
+  if (!email) error(422, "Please provide email");
+
+  const user = await User.findOne({ email: email }).lean().exec();
+  if (!user) error(404, "User is not present. Please try to signup");
+
+  if (type != "THIRD_PARTY") {
+    if (!password) error(422, "Please provide password");
+
+    bcrypt.compare(password, user.password, function (err, result) {
+      if (err) {
+        error(500, "Please provide password");
+      } else if (!result) {
+        error(422, "Password is incorrect");
+      }
+    });
+  }
 };
 
-module.exports = { validateCreate, validateUpdate };
+module.exports = { validateCreate, validateUpdate, validateLogin };
