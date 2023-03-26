@@ -1,4 +1,4 @@
-const User = require("../user/model/user.model");
+const User = require("../features/user/model/user.model");
 const error = require("../utils/errorUtil");
 const { ObjectId } = require("mongodb");
 

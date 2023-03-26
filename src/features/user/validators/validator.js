@@ -1,5 +1,5 @@
 const validator = require("validator");
-const error = require("../../utils/errorUtil");
+const error = require("../../../utils/errorUtil");
 const User = require("../model/user.model");
 const bcrypt = require("bcrypt");
 

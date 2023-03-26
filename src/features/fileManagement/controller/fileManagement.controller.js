@@ -1,7 +1,7 @@
 const express = require("express");
-const auth = require("../../middlewares/auth");
-const { multerUploads } = require("../../middlewares/multer");
-const upload = require("../../middlewares/upload");
+const auth = require("../../../middlewares/auth");
+const { multerUploads } = require("../../../middlewares/multer");
+const upload = require("../../../middlewares/upload");
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const FACILITIES_LIST = require("../../constants/facilities");
+const FACILITIES_LIST = require("../../../constants/facilities");
 
 const facilitySchema = mongoose.Schema(
   {

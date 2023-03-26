@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const ROOM_STATUS_LIST = require("../../constants/roomStatus");
+const ROOM_STATUS_LIST = require("../../../constants/roomStatus");
 
 const roomSchema = mongoose.Schema(
   {

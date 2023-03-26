@@ -1,5 +1,5 @@
-const FACILITIES_LIST = require("../../constants/facilities");
-const error = require("../../utils/errorUtil");
+const error = require("../../../utils/errorUtil");
+const FACILITIES_LIST = require("../../../constants/facilities");
 
 const Hotel = require("../model/hotel.model");
 
