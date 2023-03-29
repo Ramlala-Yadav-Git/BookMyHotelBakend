@@ -6,6 +6,7 @@ const connect = require("./config/mongoConfig");
 const router = require("./routes");
 const undefinedUrlHandler = require("./middlewares/undefinedUrlhandler");
 const errorHandler = require("./middlewares/errorHandler");
+const multer = require("multer");
 
 require("dotenv").config();
 
@@ -13,11 +14,14 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(urlencoded({ extended: false }));
+app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true }))
 app.use(json());
 app.use("*", cloudinaryConfig);
+app.use(multer().any())
 
-app.use("/book-my-hotel", router);
+app.use("/app", router);
+// app.use("/book-my-hotel", router);
 
 app.use(undefinedUrlHandler);
 app.use(errorHandler);
