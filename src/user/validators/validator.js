@@ -2,6 +2,7 @@ const validator = require("validator");
 const error = require("../../utils/errorUtil");
 
 const validateCreate = (email = "", role, headers) => {
+  
   if (!validator.isEmail(email)) {
     error("Email provided is empty or invalid", 400);
   }

@@ -6,7 +6,7 @@ const fileManagement = require("./fileManagement/routes");
 
 const router = express.Router();
 
-router.use("/users", user);
+router.use("/user", user);
 router.use("/transactions", transaction);
 router.use("/hotels", hotel);
 router.use("/file-management", fileManagement);
