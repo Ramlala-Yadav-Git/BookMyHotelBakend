@@ -1,0 +1,2 @@
+const FACILITIES_LIST = ["AVAILABLE", "NOT_AVAILABLE", "BOOKED"];
+module.exports = FACILITIES_LIST;

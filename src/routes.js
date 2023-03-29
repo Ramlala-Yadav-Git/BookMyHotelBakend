@@ -1,8 +1,8 @@
 const express = require("express");
-const user = require("./user/routes");
-const transaction = require("./transaction/routes");
-const hotel = require("./hotel/routes");
-const fileManagement = require("./fileManagement/routes");
+const user = require("./features//user/routes");
+const transaction = require("./features//transaction/routes");
+const hotel = require("./features//hotel/routes");
+const fileManagement = require("./features/fileManagement/routes");
 
 const router = express.Router();
 

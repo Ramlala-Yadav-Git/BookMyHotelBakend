@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ROOM_STATUS_LIST = require("../../../constants/roomStatus");
 
 const roomSchema = mongoose.Schema(
   {
@@ -6,7 +7,7 @@ const roomSchema = mongoose.Schema(
     beds: { type: Number, required: true },
     status: {
       type: String,
-      enum: ["AVAILABLE", "NOT_AVAILABLE", "BOOKED"],
+      enum: ROOM_STATUS_LIST,
       required: true,
     },
     hotelId: {

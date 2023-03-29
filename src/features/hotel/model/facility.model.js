@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+const FACILITIES_LIST = require("../../../constants/facilities");
 
 const facilitySchema = mongoose.Schema(
   {
     facility: {
       type: String,
-      enum: ["FREE_CANCELLATION", "BREAKFAST", "FREE_WIFI", "SWIMMING_POOL"],
+      enum: FACILITIES_LIST,
       required: true,
     },
     status: {
