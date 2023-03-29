@@ -20,7 +20,7 @@ app.use(json());
 app.use("*", cloudinaryConfig);
 app.use(multer().any())
 
-app.use("/", router);
+app.use("/app", router);
 // app.use("/book-my-hotel", router);
 
 app.use(undefinedUrlHandler);
