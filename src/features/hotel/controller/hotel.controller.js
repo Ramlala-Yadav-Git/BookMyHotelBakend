@@ -149,9 +149,9 @@ router.post("/", async (req, res, next) => {
 
       images.forEach((image) => {
         const entry = {};
-        entry.image = image;
+        entry.imageUrl = image;
         entry.hotelId = savedHotel.id;
-        imageList.push(image);
+        imageList.push(entry);
       });
       hotelEntry.imageList = await db.image.bulkCreate(imageList);
 

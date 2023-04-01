@@ -1,6 +1,6 @@
 const ImageSchema = (sequelize, DataTypes) => {
   const Image = sequelize.define("image", {
-    imageLink: { type: DataTypes.STRING, allowNull: false },
+    imageUrl: { type: DataTypes.STRING, allowNull: false },
     hotelId: { type: DataTypes.INTEGER, allowNull: false },
   });
   return Image;
