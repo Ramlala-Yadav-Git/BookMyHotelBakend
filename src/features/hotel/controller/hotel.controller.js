@@ -123,7 +123,7 @@ router.post("/", async (req, res, next) => {
     if (id) {
       await validateUpdate(body, accessToken);
       const hotel = await db.hotel.findByPk(id);
-      const newHotel = { ...hotel, city, name, description };    console.log(exception);
+      const newHotel = { ...hotel, city, name, description };
       await db.hotel.update(newHotel, { where: { id: id } });
       const savedHotel = await db.hotel.findByPk(id);
       hotelEntry = { ...savedHotel.dataValues };
