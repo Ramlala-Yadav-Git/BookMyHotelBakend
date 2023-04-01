@@ -11,8 +11,13 @@ const router = express.Router();
 
 const SALT_ROUNDS = 10;
 
+router.get("/", async (req, res, next) => {
+    res.status(200).send("Yup!! Server runnning");
+});
+
 router.post("/login", async (req, res, next) => {
   try {
+    console.log(req.body);
     const { body = {} } = req;
     await validateLogin(body);
     const { email } = body;
@@ -23,7 +28,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   try {
     const { body = {}, headers = {} } = req;
     const { id, name, role, password, email } = body;

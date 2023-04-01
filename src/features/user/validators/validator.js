@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 const validateCreate = async (body) => {
   const { email = "", type, role = "USER", password } = body;
+  console.log(password)
   if (!validator.isEmail(email))
     error(400, "Email provided is empty or invalid");
 
