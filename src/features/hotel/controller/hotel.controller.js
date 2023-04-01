@@ -4,11 +4,36 @@ const {
   validateCreate,
   validateGet,
 } = require("../validators/validator");
+const { Op } = require("sequelize");
 const db = require("../../../config/sqlConfig");
 const getRandomNumber = require("../../../utils/randomNumberUtil");
 const router = express.Router();
 
 const FACILITIES_LIST = ["SWIMMING_POOL", "WIFI", "CANCELLATION", "BREAKFAST"];
+
+router.get("/refresh", async (req, res, next) => {
+  try {
+    const transactionList = await db.transaction.findAll({
+      where: {
+        endDate: {
+          [Op.lt]: new Date(),
+        },
+      },
+    });
+
+    await Promise.all(
+      transactionList.map((transaction) => {
+        return db.room.update(
+          { status: "AVAILABLE" },
+          { where: { id: transaction.dataValues.roomId } }
+        );
+      })
+    );
+    res.status(200).send({ success: true });
+  } catch (exception) {
+    next(exception);
+  }
+});
 
 router.get("/:id", async (req, res, next) => {
   try {
@@ -98,7 +123,7 @@ router.post("/", async (req, res, next) => {
     if (id) {
       await validateUpdate(body, accessToken);
       const hotel = await db.hotel.findByPk(id);
-      const newHotel = { ...hotel, city, name, description };
+      const newHotel = { ...hotel, city, name, description };    console.log(exception);
       await db.hotel.update(newHotel, { where: { id: id } });
       const savedHotel = await db.hotel.findByPk(id);
       hotelEntry = { ...savedHotel.dataValues };
