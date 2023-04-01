@@ -10,7 +10,7 @@ const validateTransactionRequest = async (userId, roomId, days) => {
   const room = await db.room.findByPk(roomId);
   if (!room) error(422, "Invalid roomId");
 
-  if (typeof days === "number" && days >= 1) {
+  if (typeof days !== "number" && (days < 1 || days > 30)) {
     error(422, "Invalid days provided");
   }
 };
