@@ -14,7 +14,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const { params: { id } = {} } = req;
     await validateGet(id);
-    const hotelEntry = {};
+    let hotelEntry = {};
     const hotel = await db.hotel.findByPk(id);
     hotelEntry = { ...hotel };
     hotelEntry.facilities = await db.facility.findAll({
