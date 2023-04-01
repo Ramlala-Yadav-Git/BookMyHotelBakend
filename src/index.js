@@ -21,7 +21,7 @@ app.use("*", cloudinaryConfig);
 app.use(multer().any());
 
 db.sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log("Synced db.");
   })
