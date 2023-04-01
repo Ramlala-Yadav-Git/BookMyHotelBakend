@@ -11,8 +11,11 @@ const validateGet = async (id) => {
 
 const validateCreate = async (body, accessToken) => {
   await validateAccess(accessToken);
-  const { name, city, rooms, rentPerDay, facilites } = body;
+  const { name, city, rooms, rentPerDay, facilites, discount } = body;
   validateFacilities(facilites);
+  if (discount && (discount > 100 || discount < 0)) {
+    error(422, "Invalid discount amount");
+  }
   if (!name || !city || !rooms || !rentPerDay)
     error(422, "One or more mandatory keys are missing");
 };
@@ -34,6 +37,9 @@ const validateFacilities = (facilites = []) => {
 
 const validateAccess = async (id) => {
   const user = await db.user.findByPk(id);
+  if (!user) {
+    error(401, "Not authenticated");
+  }
   if (user && !["ADMIN", "ANALYST"].contains(user.role)) {
     error(403, "Not authorised to add/edit hotel");
   }

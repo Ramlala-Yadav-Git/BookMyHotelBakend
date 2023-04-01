@@ -88,6 +88,7 @@ router.post("/", async (req, res, next) => {
       facilities = [],
       rentPerDay,
       rooms,
+      discount = 0,
       description,
       images = [],
     } = body;
@@ -162,6 +163,7 @@ router.post("/", async (req, res, next) => {
         entry.hotelId = savedHotel.id;
         entry.beds = getRandomNumber(1, 3, 0);
         entry.status = "AVAILABLE";
+        entry.discount = discount;
         entry.rentPerDay = rentPerDay
           ? rentPerDay
           : getRandomNumber(750, 3000, 0);
