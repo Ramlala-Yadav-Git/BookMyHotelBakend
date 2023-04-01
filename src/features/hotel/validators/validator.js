@@ -30,7 +30,7 @@ const validateUpdate = async (body, accessToken) => {
 
 const validateFacilities = (facilites = []) => {
   facilites.forEach((item) => {
-    if (!FACILITIES_LIST.contains(item))
+    if (!FACILITIES_LIST.includes(item))
       error(422, "One or more facilities key are invalid");
   });
 };
@@ -40,7 +40,7 @@ const validateAccess = async (id) => {
   if (!user) {
     error(401, "Not authenticated");
   }
-  if (user && !["ADMIN", "ANALYST"].contains(user.role)) {
+  if (user && !["ADMIN", "ANALYST"].includes(user.role)) {
     error(403, "Not authorised to add/edit hotel");
   }
 };

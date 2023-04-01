@@ -80,7 +80,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { body = {}, headers: { accessToken } = {} } = req;
+    const { body = {}, headers: { accesstoken: accessToken } = {} } = req;
     const {
       id,
       name,
