@@ -4,7 +4,7 @@ const db = require("../../../config/sqlConfig");
 const FACILITIES_LIST = ["SWIMMING_POOL", "WIFI", "CANCELLATION", "BREAKFAST"];
 
 const validateGet = async (id) => {
-  if (id) error(400, "Invaid request");
+  if (!id) error(400, "Invaid request");
   const hotel = await db.hotel.findByPk(id);
   if (!hotel) error(400, "Invalid hotel id");
 };
