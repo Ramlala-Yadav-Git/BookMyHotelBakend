@@ -1,7 +1,7 @@
 const error = require("../../../utils/errorUtil");
-const FACILITIES_LIST = require("../../../constants/facilities");
-
 const Hotel = require("../model/hotel.model");
+
+const FACILITIES_LIST = ["SWIMMING_POOL", "WIFI", "CANCELLATION", "BREAKFAST"];
 
 const validateCreate = async (body) => {
   const { name, city, rooms, rentPerDay, facilites } = body;
