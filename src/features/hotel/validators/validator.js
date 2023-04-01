@@ -13,7 +13,7 @@ const validateCreate = async (body, accessToken) => {
   await validateAccess(accessToken);
   const { name, city, rooms, rentPerDay, facilites } = body;
   validateFacilities(facilites);
-  if (!name || !city || !rooms || rentPerDay)
+  if (!name || !city || !rooms || !rentPerDay)
     error(422, "One or more mandatory keys are missing");
 };
 
