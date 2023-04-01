@@ -30,7 +30,6 @@ db.sequelize
   });
 
 app.use("/app", router);
-// app.use("/book-my-hotel", router);
 
 app.use(undefinedUrlHandler);
 app.use(errorHandler);

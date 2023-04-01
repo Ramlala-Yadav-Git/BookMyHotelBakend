@@ -1,6 +1,5 @@
 const FacilitySchema = (sequelize, DataTypes) => {
   const Facility = sequelize.define("facility", {
-    name: { type: DataTypes.STRING, allowNull: true },
     hotelId: { type: DataTypes.INTEGER, allowNull: false },
     status: { type: DataTypes.BOOLEAN, allowNull: false },
     facility: {
