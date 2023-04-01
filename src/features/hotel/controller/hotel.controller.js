@@ -16,12 +16,14 @@ router.get("/:id", async (req, res, next) => {
     await validateGet(id);
     let hotelEntry = {};
     const hotel = await db.hotel.findByPk(id);
-    hotelEntry = { ...hotel };
+    hotelEntry = { ...hotel.dataValues };
     hotelEntry.facilities = await db.facility.findAll({
       where: { hotelId: id },
-    });
-    hotelEntry.imageList = await db.image.findAll({ where: { hotelId: id } });
-    hotelEntry.rooms = await db.room.findAll({ where: { hotelId: id } });
+    }).dataValues;
+    hotelEntry.imageList = await db.image.findAll({ where: { hotelId: id } })
+      .dataValues;
+    hotelEntry.rooms = await db.room.findAll({ where: { hotelId: id } })
+      .dataValues;
     res.status(200).send(hotelEntry);
   } catch (exception) {
     next(exception);
