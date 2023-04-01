@@ -15,7 +15,7 @@ router.get("/:id", async (req, res, next) => {
     const { params: { id } = {} } = req;
     await validateGet(id);
     const hotelEntry = {};
-    const hotel = await db.hotel.findByPK(id);
+    const hotel = await db.hotel.findByPk(id);
     hotelEntry = { ...hotel };
     hotelEntry.facilities = await db.facility.findAll({
       where: { hotelId: id },
@@ -44,10 +44,10 @@ router.post("/", async (req, res, next) => {
     const hotelEntry = {};
     if (id) {
       await validateUpdate(body, accessToken);
-      const hotel = await db.hotel.findByPK(id);
+      const hotel = await db.hotel.findByPk(id);
       const newHotel = { ...hotel, city, name, description };
       await db.hotel.update(newHotel, { where: { id: id } });
-      const savedHotel = await db.hotel.findByPK(id);
+      const savedHotel = await db.hotel.findByPk(id);
       hotelEntry = { ...savedHotel };
 
       const newFacilities = [];

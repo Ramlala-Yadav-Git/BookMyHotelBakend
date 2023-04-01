@@ -5,7 +5,7 @@ const FACILITIES_LIST = ["SWIMMING_POOL", "WIFI", "CANCELLATION", "BREAKFAST"];
 
 const validateGet = async (id) => {
   if (id) error(400, "Invaid request");
-  const hotel = await db.hotel.findByPK(id);
+  const hotel = await db.hotel.findByPk(id);
   if (!hotel) error(400, "Invalid hotel id");
 };
 
@@ -21,7 +21,7 @@ const validateUpdate = async (body, accessToken) => {
   await validateAccess(accessToken);
   const { id, facilites } = body;
   validateFacilities(facilites);
-  const hotel = await db.hotel.findByPK(id);
+  const hotel = await db.hotel.findByPk(id);
   if (!hotel) error(400, "Invalid hotel id");
 };
 
@@ -33,7 +33,7 @@ const validateFacilities = (facilites = []) => {
 };
 
 const validateAccess = async (id) => {
-  const user = await db.user.findByPK(id);
+  const user = await db.user.findByPk(id);
   if (user && !["ADMIN", "ANALYST"].contains(user.role)) {
     error(403, "Not authorised to add/edit hotel");
   }
