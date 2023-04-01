@@ -1,27 +1,19 @@
-const mongoose = require("mongoose");
-const FACILITIES_LIST = require("../../../constants/facilities");
-
-const facilitySchema = mongoose.Schema(
-  {
+const FacilitySchema = (sequelize, DataTypes) => {
+  const Facility = sequelize.define("facility", {
+    name: { type: DataTypes.STRING, allowNull: true },
+    hotelId: { type: DataTypes.INTEGER, allowNull: false },
+    status: { type: DataTypes.BOOLEAN, allowNull: false },
     facility: {
-      type: String,
-      enum: FACILITIES_LIST,
-      required: true,
+      type: DataTypes.ENUM(
+        "SWIMMING_POOL",
+        "WIFI",
+        "CANCELLATION",
+        "BREAKFAST"
+      ),
+      allowNull: false,
     },
-    status: {
-      type: Boolean,
-      required: true,
-    },
-    hotelId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel",
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
-);
+  });
+  return Facility;
+};
 
-module.exports = mongoose.model("Facility", facilitySchema);
+module.exports = FacilitySchema;

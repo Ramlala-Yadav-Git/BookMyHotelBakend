@@ -1,18 +1,9 @@
-const mongoose = require("mongoose");
+const ImageSchema = (sequelize, DataTypes) => {
+  const Image = sequelize.define("image", {
+    imageLink: { type: DataTypes.STRING, allowNull: false },
+    hotelId: { type: DataTypes.INTEGER, allowNull: false },
+  });
+  return Image;
+};
 
-const imageSchema = mongoose.Schema(
-  {
-    imageLink: { type: String, required: true },
-    hotelId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel",
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
-);
-
-module.exports = mongoose.Schema("Image", imageSchema);
+module.exports = ImageSchema;

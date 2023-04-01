@@ -5,7 +5,7 @@ const {
   validateLogin,
 } = require("../validators/validator");
 const bcrypt = require("bcrypt");
-const User = require("../model/user.model");
+const db = require("../../../config/sqlConfig");
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.post("/login", async (req, res, next) => {
     const { body = {} } = req;
     await validateLogin(body);
     const { email } = body;
-    const user = await User.findOne({ email: email }).lean().exec();
+    const user = await db.user.findOne({ where: { email: email } });
     res.status(200).send(user);
   } catch (exception) {
     next(exception);
@@ -37,7 +37,8 @@ router.post("/", async (req, res, next) => {
       if (role) updatedUser.role = role;
       if (email) updatedUser.email = email;
       updatedUser.name = name ? name : "";
-      user = await User.findByIdAndUpdate(id, updatedUser, { new: true });
+      const savedUser = await db.user.findByPk(id);
+      user = await savedUser.update(updatedUser);
     } else {
       await validateCreate(body);
       const newUser = {};
@@ -45,7 +46,7 @@ router.post("/", async (req, res, next) => {
       newUser.role = role ? role : "USER";
       newUser.email = email;
       newUser.name = name ? name : "";
-      user = await User.create(newUser);
+      user = await db.user.create(newUser);
     }
     res.status(200).send(user);
   } catch (exception) {

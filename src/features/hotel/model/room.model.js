@@ -1,25 +1,14 @@
-const mongoose = require("mongoose");
-const ROOM_STATUS_LIST = require("../../../constants/roomStatus");
-
-const roomSchema = mongoose.Schema(
-  {
-    rentPerDay: { type: Number, required: true },
-    beds: { type: Number, required: true },
+const RoomSchema = (sequelize, DataTypes) => {
+  const Room = sequelize.define("room", {
+    rentPerDay: { type: DataTypes.INTEGER, allowNull: false },
+    hotelId: { type: DataTypes.INTEGER, allowNull: false },
+    beds: { type: DataTypes.INTEGER, allowNull: false },
     status: {
-      type: String,
-      enum: ROOM_STATUS_LIST,
-      required: true,
+      type: DataTypes.ENUM("AVAILABLE", "NOT_AVAILABLE", "BOOKED"),
+      allowNull: false,
     },
-    hotelId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel",
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
-);
+  });
+  return Room;
+};
 
-module.exports = mongoose.model("Room", roomSchema);
+module.exports = RoomSchema;

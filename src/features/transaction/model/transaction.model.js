@@ -1,24 +1,14 @@
-const mongoose = require("mongoose");
-
-const transactionSchema = mongoose.Schema(
-  {
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+const TransactionSchema = (sequelize, DataTypes) => {
+  const transaction = sequelize.define("transaction", {
+    startDate: { type: DataTypes.DATE, allowNull: true },
+    endDate: { type: DataTypes.DATE, allowNull: false },
+    userId: { type: DataTypes.INTEGER, allowNull: false },
     roomId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Room",
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
-);
+  });
+  return transaction;
+};
 
-module.exports = mongoose.model("Transaction", transactionSchema);
+module.exports = TransactionSchema;

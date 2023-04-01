@@ -1,21 +1,14 @@
-const mongoose = require("mongoose");
+const HotelSchema = (sequelize, DataTypes) => {
+  const Hotel = sequelize.define("hotel", {
+    name: { type: DataTypes.STRING, allowNull: false },
+    city: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.TEXT, allowNull: false },
+    rating: { type: DataTypes.INTEGER, allowNull: false },
+    review: { type: DataTypes.INTEGER, allowNull: false },
+    hotelId: { type: DataTypes.INTEGER, allowNull: false },
+    status: { type: DataTypes.BOOLEAN, allowNull: false },
+  });
+  return Hotel;
+};
 
-const hotelSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    city: { type: String, required: true },
-    description: { type: String, required: false },
-    rating: { type: Number, required: true },
-    review: { type: Number, required: true },
-    status: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
-);
-
-module.exports = mongoose.model("Hotel", hotelSchema);
+module.exports = HotelSchema;
