@@ -25,7 +25,7 @@ const validateCreate = async (body) => {
 
 const validateUpdate = async (body, headers) => {
   const { id, email, role, password } = body;
-  const { accessToken } = headers;
+  const { accesstoken: accessToken } = headers;
   if (email && !validator.isEmail(email))
     error(400, "Email provided is invalid");
 
