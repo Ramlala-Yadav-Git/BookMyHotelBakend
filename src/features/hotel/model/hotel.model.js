@@ -6,7 +6,7 @@ const HotelSchema = (sequelize, DataTypes) => {
     rating: { type: DataTypes.INTEGER, allowNull: false },
     review: { type: DataTypes.INTEGER, allowNull: false },
     status: { type: DataTypes.BOOLEAN, allowNull: false },
-    url: { type: DataTypes.STRING, allowNull: false },
+    url: { type: DataTypes.STRING, allowNull: true },
   });
   return Hotel;
 };
