@@ -1,5 +1,6 @@
 const express = require("express");
 const { urlencoded, json } = require("body-parser");
+const parser = require("body-parser");
 const { cloudinaryConfig } = require("./config/cloudinaryConfig");
 const cors = require("cors");
 const router = require("./routes");
@@ -13,8 +14,9 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.json());
+app.use(parser.text({ type: '/' }));
 app.use(cors());
-app.use(urlencoded({ extended: true }));
+app.use(urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());
 app.use("*", cloudinaryConfig);

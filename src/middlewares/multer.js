@@ -7,8 +7,8 @@ const dUri = new Datauri();
 
 const dataUri = (req) => {
   return dUri.format(
-    path.extname(req.file.originalname).toString(),
-    req.file.buffer
+    path.extname(req.files[0].originalname).toString(),
+    req.files[0].buffer
   );
 };
 

@@ -12,5 +12,13 @@ router.post("/", multerUploads, upload, (req, res, next) => {
     next(exception);
   }
 });
+router.get("/", (req, res, next) => {
+  try {
+    const { image: link } = req;
+    res.status(200).send({ imageLink: link });
+  } catch (exception) {
+    next(exception);
+  }
+});
 
 module.exports = router;

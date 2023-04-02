@@ -10,7 +10,6 @@ const validateGet = async (id) => {
 };
 
 const validateCreate = async (body, accessToken) => {
-  console.log(accessToken, "token");
   await validateAccess(accessToken);
   const { name, city, rooms, price, facilites, discount } = body;
   validateFacilities(facilites);
@@ -38,7 +37,6 @@ const validateFacilities = (facilites = []) => {
 
 const validateAccess = async (id) => {
   const user = await db.user.findByPk(id);
-  console.log(user, "user");
   if (!user) {
     error(401, "Not authenticated");
   }

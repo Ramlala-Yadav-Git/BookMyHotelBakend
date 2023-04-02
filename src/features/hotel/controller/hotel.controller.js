@@ -109,7 +109,6 @@ router.post("/", async (req, res, next) => {
   try {
     const { body = {}, headers: { accesstoken: accessToken } = {} } = req;
     accessToken == accessToken || req.accessToken;
-    console.log(body);
     const {
       id,
       name,
