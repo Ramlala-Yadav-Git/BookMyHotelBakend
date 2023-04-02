@@ -119,14 +119,14 @@ router.post("/", async (req, res, next) => {
       rooms,
       discount = 0,
       description,
-      image,
+      url,
       images = [],
     } = body;
     let hotelEntry = {};
     if (id) {
       await validateUpdate(body, accessToken);
       const hotel = await db.hotel.findByPk(id);
-      const newHotel = { ...hotel, city, name, description, image };
+      const newHotel = { ...hotel, city, name, description, url };
       await db.hotel.update(newHotel, { where: { id: id } });
       const savedHotel = await db.hotel.findByPk(id);
       hotelEntry = { ...savedHotel.dataValues };
@@ -163,7 +163,7 @@ router.post("/", async (req, res, next) => {
         rating: getRandomNumber(1, 5, 1),
         review: getRandomNumber(200, 1000, 0),
         status: true,
-        image: image,
+        url: url,
       };
       const savedHotel = await db.hotel.create(hotel);
       hotelEntry = { ...savedHotel.dataValues };

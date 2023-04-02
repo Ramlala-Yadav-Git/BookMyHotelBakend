@@ -11,12 +11,12 @@ const validateGet = async (id) => {
 
 const validateCreate = async (body, accessToken) => {
   await validateAccess(accessToken);
-  const { name, city, rooms, price, facilites, discount, image } = body;
+  const { name, city, rooms, price, facilites, discount, url } = body;
   validateFacilities(facilites);
   if (discount && (discount > 100 || discount < 0)) {
     error(422, "Invalid discount amount");
   }
-  if (!name || !city || !rooms || !price || !image)
+  if (!name || !city || !rooms || !price || !url)
     error(422, "One or more mandatory keys are missing");
 };
 
