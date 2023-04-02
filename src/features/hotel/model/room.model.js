@@ -1,6 +1,6 @@
 const RoomSchema = (sequelize, DataTypes) => {
   const Room = sequelize.define("room", {
-    rentPerDay: { type: DataTypes.INTEGER, allowNull: false },
+    price: { type: DataTypes.INTEGER, allowNull: false },
     hotelId: { type: DataTypes.INTEGER, allowNull: false },
     beds: { type: DataTypes.INTEGER, allowNull: false },
     discount: { type: DataTypes.INTEGER, allowNull: false },

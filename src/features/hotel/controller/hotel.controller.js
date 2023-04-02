@@ -108,12 +108,14 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const { body = {}, headers: { accesstoken: accessToken } = {} } = req;
+    accessToken == accessToken || req.accessToken;
+    console.log(body);
     const {
       id,
       name,
       city,
       facilities = [],
-      rentPerDay,
+      price,
       rooms,
       discount = 0,
       description,
@@ -191,8 +193,8 @@ router.post("/", async (req, res, next) => {
         entry.beds = getRandomNumber(1, 3, 0);
         entry.status = "AVAILABLE";
         entry.discount = discount;
-        entry.rentPerDay = rentPerDay
-          ? rentPerDay
+        entry.price = price
+          ? price
           : getRandomNumber(750, 3000, 0);
         roomsList.push(entry);
       }
