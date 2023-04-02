@@ -3,6 +3,7 @@ const {
   validateUpdate,
   validateCreate,
   validateGet,
+  validateAccess,
 } = require("../validators/validator");
 const { Op } = require("sequelize");
 const db = require("../../../config/sqlConfig");
@@ -118,13 +119,14 @@ router.post("/", async (req, res, next) => {
       rooms,
       discount = 0,
       description,
+      image,
       images = [],
     } = body;
     let hotelEntry = {};
     if (id) {
       await validateUpdate(body, accessToken);
       const hotel = await db.hotel.findByPk(id);
-      const newHotel = { ...hotel, city, name, description };
+      const newHotel = { ...hotel, city, name, description, image };
       await db.hotel.update(newHotel, { where: { id: id } });
       const savedHotel = await db.hotel.findByPk(id);
       hotelEntry = { ...savedHotel.dataValues };
@@ -161,6 +163,7 @@ router.post("/", async (req, res, next) => {
         rating: getRandomNumber(1, 5, 1),
         review: getRandomNumber(200, 1000, 0),
         status: true,
+        image: image,
       };
       const savedHotel = await db.hotel.create(hotel);
       hotelEntry = { ...savedHotel.dataValues };
@@ -192,9 +195,7 @@ router.post("/", async (req, res, next) => {
         entry.beds = getRandomNumber(1, 3, 0);
         entry.status = "AVAILABLE";
         entry.discount = discount;
-        entry.price = price
-          ? price
-          : getRandomNumber(750, 3000, 0);
+        entry.price = price ? price : getRandomNumber(750, 3000, 0);
         roomsList.push(entry);
       }
 
@@ -202,6 +203,37 @@ router.post("/", async (req, res, next) => {
     }
 
     res.status(200).send(hotelEntry);
+  } catch (exception) {
+    next(exception);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const {
+      params: { id } = {},
+      headers: { accesstoken: accessToken },
+    } = req;
+    accessToken == accessToken || req.accessToken;
+    await validateAccess(accessToken);
+    if (id) {
+      const hotel = await db.hotel.findByPk(id);
+      if (hotel) {
+        const hotelId = hotel.dataValues.id;
+        await hotel.destroy();
+        await db.room.update(
+          { status: "NOT_AVAILABLE" },
+          { where: { hotelId: hotelId } }
+        );
+        await db.facility.update(
+          { status: false },
+          { where: { hotelId: hotelId } }
+        );
+      }
+      res.status(200).send({ success: true });
+    } else {
+      res.status(200).send({ success: false });
+    }
   } catch (exception) {
     next(exception);
   }
