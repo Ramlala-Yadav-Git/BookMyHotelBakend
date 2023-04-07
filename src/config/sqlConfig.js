@@ -1,8 +1,15 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize("bookmyhotel", "user", "pass", {
-  host: "./dev.sqlite",
-  dialect: "sqlite",
+const sequelize = new Sequelize('neondb', 'admin', 'HMXGd0mP2EvW', {
+  host: 'ep-icy-dust-134314.us-east-2.aws.neon.tech',
+  dialect: 'postgres',
+  logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
 });
 
 const db = {};
