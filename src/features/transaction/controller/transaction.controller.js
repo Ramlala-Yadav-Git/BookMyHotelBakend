@@ -68,7 +68,7 @@ router.get("/:userId", async (req, res, next) => {
           url: hotel.url,
           id: hotel.id,
         };
-        const roomDetails = { beds: room.beds, id: room.id };
+        const roomDetails = { beds: room.beds, id: room.id, price:room.price };
         entry.hotelDetails = hotelDetails;
         entry.roomDetails = roomDetails;
         entry.id = transaction.id;
