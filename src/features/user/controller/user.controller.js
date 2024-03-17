@@ -10,7 +10,9 @@ const db = require("../../../config/sqlConfig");
 const router = express.Router();
 
 const SALT_ROUNDS = 10;
-
+router.get("/", async (req, res, next)=>{
+  res.status(200).send({"message":"Welcome !!"});
+})
 router.post("/login", async (req, res, next) => {
   try {
     const { body = {} } = req;
